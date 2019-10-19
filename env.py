@@ -6,6 +6,7 @@ from contextlib import closing
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+np.random.seed(42)
 # from gym.envs.toy_text import FrozenLakeEnv
 
 
@@ -137,7 +138,7 @@ class FrozenLakeEnv(discrete.DiscreteEnv):
             assert len(self.rewards) == self.nrow*self.ncol
         else:
             self.rewards = None
-
+        self.rewards_implict = []
         nA = 4
         nS = nrow * ncol
 
@@ -178,6 +179,10 @@ class FrozenLakeEnv(discrete.DiscreteEnv):
                                 rew = float(newletter == b'G')
                                 if self.rewards is not None:
                                     rew = self.rewards[s]
+                                if rew == 0:
+                                    rew = -1
+                                assert rew is not 0
+                                self.rewards_implict.append(rew)
                                 li.append((1.0/3.0, newstate, rew, done))
                         else:
                             newrow, newcol = inc(row, col, a)
@@ -185,6 +190,9 @@ class FrozenLakeEnv(discrete.DiscreteEnv):
                             newletter = desc[newrow, newcol]
                             done = bytes(newletter) in b'GH'
                             rew = float(newletter == b'G')
+                            if rew == 0:
+                                rew = -1
+                            assert rew is not 0                        
                             li.append((1.0, newstate, rew, done))
 
         super(FrozenLakeEnv, self).__init__(nS, nA, P, isd)

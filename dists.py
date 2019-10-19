@@ -1,6 +1,6 @@
 import scipy.stats
 import numpy as np
-
+np.random.seed(42)
 
 class UniformDist:
     def __init__(self, xmax=1., xmin=None):

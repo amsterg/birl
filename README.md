@@ -1,4 +1,4 @@
-# birl
+# BIRL
 Bayesian Inverse Reinforcement Learning
 
 * Code for Bayesian IRL and learning a reward function and thus validating the learnt reward through Dynamic Programming on Frozen Lake OpenAI environemnt
